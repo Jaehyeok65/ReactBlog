@@ -1,0 +1,30 @@
+.inputs {
+    border: none;
+
+    width: 1000px;
+    
+    font-size: 30px;
+
+}
+
+.inputs2 {
+    border: none;
+
+    width: 1140px;
+    height: 800px;
+    
+    
+}
+input:focus {
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.submits {
+    border-radius: 12px;
+    width: 100px;
+    border-color: white;
+}
