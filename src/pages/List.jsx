@@ -18,7 +18,6 @@ var [total,setTotal] = useState(0);
     .then(res => {
       setPost(res.data);
     })
-    console.log('이게 실행되는지 테스트');
 
     axios.get('http://localhost:8088/recordcounts')
     .then(res => {
@@ -37,7 +36,6 @@ var [total,setTotal] = useState(0);
 
     
   const pagenum = Math.ceil(total / limit);
-  console.log(total);
 
 
 
@@ -45,7 +43,7 @@ var [total,setTotal] = useState(0);
         <div>
           <div>
           {post.map(post => {
-            return <Modal title={post.title} contents={post.contents} />
+            return <Modal title={post.title} contents={post.contents} id = {post.id} />
           })}
           </div>
           <footer className = 'footers'>
