@@ -1,22 +1,53 @@
-import React from 'react';
-import './Write.css';
+    import React,{ useState } from 'react';
+    import './Write.css';
+    import axios from 'axios';
+    import queryString from 'query-string';
 
-function Write() {
+    function Writes() {
+
+        const location = window.location.search;
+        const query = queryString.parse(location);
+        const url = 'http://localhost:8088/create?pg='+query.pg+"&sz="+query.sz;
+
+        let [title,setTitle] = useState()
+        let [contents,setContents] = useState()
 
 
-    return(
-        <div>
+        function posts() {
+            axios.post(url, {
+                title : title,
+                contents : contents
+            })
+            .then(res => {
+                document.location.href = "/list?pg="+res.data+"&sz="+query.sz;
+            })
+        }
 
-            <form action='http://localhost:8088/blog' method='post'>
-                <input type='text' name='title' placeholder='제목' className='inputs' />
-                <input type='submit' value='발행' className='submits' />
-                <hr/>
-                <br/>
-                <br/>
-                <textarea name='contents' placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2' />
-            </form>
-        </div>
-    );
-}
+        const handletitleChange = (e) => {
+            setTitle(e.target.value);
+        };
 
-export default Write;
+        const handlecontentsChange = (e) => {
+        setContents(e.target.value);
+    };
+
+        
+
+
+        return(
+            <div>
+                    <input type='text' name='title' value = {title} placeholder='제목' className='inputs'
+                    onChange={handletitleChange}
+                    />
+                    <button onClick={posts}>발행</button>
+                    <hr/>
+                    <br/>
+                    <br/>
+                    <textarea name='contents' value = {contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
+                    onChange={handlecontentsChange}
+                    />
+            </div>
+        );
+    }
+
+    export default Writes;

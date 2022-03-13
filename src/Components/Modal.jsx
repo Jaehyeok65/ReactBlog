@@ -5,12 +5,12 @@ import Contents from '../pages/Contents';
 
 function Modal(props) {
 
-  const url = "/contents?id="+props.id;
+  const url = "/contents?id="+props.id+"&pg="+props.pg+"&sz="+props.sz;
 
   return (
     <div>
       <Link to={url} style={{ textDecoration: 'none', color : 'black' }}><h4>제목 : {props.title}</h4></Link>
-      <p>내용 : {props.contents}</p>
+      <p>내용 : {props.contents} </p>
       <hr/>
     </div>
   );
