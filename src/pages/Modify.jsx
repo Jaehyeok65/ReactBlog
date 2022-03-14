@@ -8,8 +8,6 @@
 
     function Modify() {
 
-        //let [title,setTitle] = useState();
-        //let [contents,setContents] = useState();
 
         let [inputs, setInputs] = useState({
             title : '',
