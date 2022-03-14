@@ -8,8 +8,13 @@
 
     function Modify() {
 
-        let [title,setTitle] = useState();
-        let [contents,setContents] = useState();
+        //let [title,setTitle] = useState();
+        //let [contents,setContents] = useState();
+
+        let [inputs, setInputs] = useState({
+            title : '',
+            contents : '',
+        });
 
         const location = window.location.search;
         const query = queryString.parse(location);
@@ -20,25 +25,25 @@
 
             axios.get('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz)
             .then(res => {
-            setTitle(res.data.title);
-            setContents(res.data.contents);
+                setInputs({title : res.data.title, contents : res.data.contents});
+                console.log(res.data);
             })
         },[])
 
-        const handletitleChange = (e) => {
-            setTitle(e.target.value);
-        };
-
-        const handlecontentsChange = (e) => {
-            setContents(e.target.value);
-        };
+        const onChange = (e) => {
+            const { name, value } = e.target;
+            setInputs( {
+                ...inputs,
+                [name] : value
+            });
+        }
 
         
         const updates = () => {
             axios.post(updateurl, {
                 id : query.id,
-                title : title,
-                contents : contents
+                title : inputs.title,
+                contents : inputs.contents
             })
             .then(res => {
                 document.location.href = "/contents?id="+res.data.id+"&pg="+query.pg+"&sz="+query.sz;
@@ -48,15 +53,15 @@
 
         return(
             <div>
-                <input type='text' name='title' value = {title} placeholder='제목' className='inputs'
-                    onChange={handletitleChange}
+                <input type='text' name='title' value = {inputs.title} placeholder='제목' className='inputs'
+                    onChange={onChange}
                     />
                     <button onClick={updates}>수정</button>
                     <hr/>
                     <br/>
                     <br/>
-                    <textarea name='contents' value = {contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
-                    onChange={handlecontentsChange}
+                    <textarea name='contents' value = {inputs.contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
+                    onChange={onChange}
                     />
                 <footer>
                 <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
