@@ -9,7 +9,7 @@
     function Modify() {
 
 
-        let [inputs, setInputs] = useState({
+        const [inputs, setInputs] = useState({
             title : '',
             contents : '',
         });

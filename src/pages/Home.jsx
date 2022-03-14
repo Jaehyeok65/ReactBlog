@@ -1,12 +1,28 @@
-  import React from 'react';
+  import React,{ useState } from 'react';
 
+  
   const Home = () => {
 
-    return (
-      <div>
-        <h1>홈</h1>
-      </div>
-    );
-  };
+    const [count,setCount] = useState(0);
+    
+    const onIncrease = () => {
+      setCount(count => count + 1);
+    }
 
-  export default Home;
+    const onDecrease = () => {
+      setCount(count - 1);
+    }
+
+
+      return (
+          <div>
+            {count}
+            <br/>
+            <button onClick={onIncrease}>증가</button>
+            <br/>
+            <button onClick={onDecrease}>감소</button>
+          </div>
+      );
+    };
+
+    export default Home;

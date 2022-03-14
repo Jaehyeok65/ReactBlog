@@ -14,10 +14,10 @@
     
 
 
-    let [post,setPost] = useState([]); //게시글 담을 state 선언  
-    let [limit,setLimit] = useState(query.sz);
-    let [page,setPage] = useState(query.pg);  //let과 var의 차이점 공부하기
-    let [total,setTotal] = useState(0);  //state를 쓰는 이유와 기준에 대해서 공부하기(render에 관여) 리팩토링 과정 git commit으로 남겨놓을 것
+    const [post,setPost] = useState([]); //게시글 담을 state 선언  
+    const [limit,setLimit] = useState(query.sz);
+    const [page,setPage] = useState(query.pg);  //let과 var의 차이점 공부하기
+    const [total,setTotal] = useState(0);  //state를 쓰는 이유와 기준에 대해서 공부하기(render에 관여) 리팩토링 과정 git commit으로 남겨놓을 것
   
 
     const url = 'http://localhost:8088/list?pg='+query.pg+"&sz="+query.sz;

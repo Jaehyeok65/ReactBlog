@@ -14,7 +14,7 @@
 
 
 
-    let [posts,setPosts] = useState();
+    const [posts,setPosts] = useState();
 
     useEffect(() => {
 
