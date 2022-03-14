@@ -16,7 +16,7 @@
 
     let [posts,setPosts] = useState();
 
-    useEffect(function() {
+    useEffect(() => {
 
       axios.get('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz)
       .then(res => {
@@ -25,13 +25,13 @@
     },[])
 
 
-    function title() {
+    const title = () => {
       if(posts !== undefined) {
         return posts.title
       }
     }
 
-    function comfirms() {
+    const comfirms = () => {
       if(window.confirm('삭제하시겠습니까?')) {
         deletes();
       }
@@ -40,7 +40,7 @@
       }
     }
 
-    function deletes() {
+    const deletes = () => {
       axios.get('http://localhost:8088/delete?id='+query.id+'&pg='+query.pg+'&sz='+query.sz)
       .then(res => {
         if(res.data === true) {

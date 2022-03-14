@@ -24,7 +24,7 @@
     const pagenum = Math.ceil(total/limit);
 
     
-    useEffect(function() { //ComponentDidMount 역할 = 최초 렌더 되기전에 서버에서 데이터를 받아서 state에 저장.
+    useEffect(() => { //ComponentDidMount 역할 = 최초 렌더 되기전에 서버에서 데이터를 받아서 state에 저장.
       axios.get(url)
       .then(res => {
         setPost(res.data);
@@ -38,7 +38,7 @@
 
     
 
-    useEffect(function() {
+    useEffect(() => {
       axios.get('http://localhost:8088/list?pg='+page+"&sz="+limit)
       .then(res => {
         console.log(res.data);

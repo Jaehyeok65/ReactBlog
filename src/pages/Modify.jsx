@@ -16,7 +16,7 @@
         const listurl = "/list?pg="+query.pg+"&sz="+query.sz;
         const updateurl = 'http://localhost:8088/update?id='+query.id+"&pg="+query.pg+"&sz="+query.sz;
 
-        useEffect(function() {
+        useEffect(() => {
 
             axios.get('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz)
             .then(res => {
@@ -34,7 +34,7 @@
         };
 
         
-        function updates() {
+        const updates = () => {
             axios.post(updateurl, {
                 id : query.id,
                 title : title,

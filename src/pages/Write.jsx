@@ -13,7 +13,7 @@
         let [contents,setContents] = useState()
 
 
-        function posts() {
+        const posts = () => {
             axios.post(url, {
                 title : title,
                 contents : contents
