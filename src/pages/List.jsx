@@ -11,17 +11,17 @@
 
     const location = window.location.search; //
     const query = queryString.parse(location);
-    
+    const size = query.sz;
 
 
     const [post,setPost] = useState([]); //게시글 담을 state 선언  
-    const [limit,setLimit] = useState(query.sz);
+    //const [limit,setLimit] = useState(query.sz);
     const [page,setPage] = useState(query.pg);  //let과 var의 차이점 공부하기
     const [total,setTotal] = useState(0);  //state를 쓰는 이유와 기준에 대해서 공부하기(render에 관여) 리팩토링 과정 git commit으로 남겨놓을 것
   
 
     const url = 'http://localhost:8088/list?pg='+query.pg+"&sz="+query.sz;
-    const pagenum = Math.ceil(total/limit);
+    const pagenum = Math.ceil(total/size);
 
     
     useEffect(() => { //ComponentDidMount 역할 = 최초 렌더 되기전에 서버에서 데이터를 받아서 state에 저장.
@@ -39,12 +39,11 @@
     
 
     useEffect(() => {
-      axios.get('http://localhost:8088/list?pg='+page+"&sz="+limit)
+      axios.get('http://localhost:8088/list?pg='+page+"&sz="+size)
       .then(res => {
-        console.log(res.data);
         setPost(res.data);
       })
-    },[page,limit]);
+    },[page,size]);
 
       
     
@@ -55,7 +54,7 @@
           <div>
             <div>
             {post.map(post => {
-              return <Modal title={post.title} contents={String(post.contents).substring(0,77)} id = {post.id} pg = {page} sz = {limit} />
+              return <Modal title={post.title} contents={String(post.contents).substring(0,77)} id = {post.id} pg = {page} sz = {size} key = {post.id} />
             })}
             </div>
             <footer className = 'footers'>
