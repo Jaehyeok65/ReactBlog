@@ -1,12 +1,12 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
 import './App.css';
-import axios from 'axios';
 import { Link, Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import Home from './pages/Home';
 import Write from './pages/Write';
 import List from './pages/List';
-import About from './pages/About';
+import Contents from './pages/Contents';
+import Modify from './pages/Modify';
 
 
 
@@ -16,7 +16,9 @@ function App() {
 
 
  
-
+const listurl = '/list?pg=1&sz=10';
+const writeurl = '/write?pg=1&sz=10';
+const homeurl = '/?pg=1&sz=10';
 
 
 
@@ -47,9 +49,9 @@ function App() {
       <Router>
       <div className='nav2'>
         <div className='margin2'>
-        <span className='span1'><Link to=''>블로그 홈</Link></span>
-        <span className='span2'><Link to='write'>게시글 쓰기</Link></span>
-        <span className='span3'><Link to='list'>포스트 목록보기</Link></span>
+        <span className='span1'><Link to={homeurl}>블로그 홈</Link></span>
+        <span className='span2'><Link to={writeurl}>게시글 쓰기</Link></span>
+        <span className='span3'><Link to={listurl}>포스트 목록보기</Link></span>
         <span className='span6'>블로그 마켓 가입</span>
         <span className='span7'>블로그팀 공식 블로그</span>
         </div>
@@ -62,7 +64,8 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route path='/list' element={<List />} />
           <Route path='/write' element={<Write />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/contents' element={<Contents />} />
+          <Route path='/modify' element={<Modify />} />
         </Routes>
       </article>
       </Router>

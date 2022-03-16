@@ -68,4 +68,4 @@
         );
     }
 
-    export default Modify;
+    export default React.memo(Modify);

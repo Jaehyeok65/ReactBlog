@@ -50,4 +50,4 @@
         );
     }
 
-    export default Writes;
+    export default React.memo(Writes);
