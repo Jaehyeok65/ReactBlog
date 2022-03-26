@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React, { useReducer, useRef } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import './Login.css';
+import { Transition } from 'react-transition-group';
 
 
 
@@ -82,22 +83,26 @@ function Login() {
   
 
   return (
-    <>
-    <table style={ {margin : 'auto', width : '450px' , height : '250px'}}>
-    <div style={ {padding : '30px', paddingRight:'50px'}}>
-    <h2 style={{marginLeft : '120px'}}>로그인 페이지</h2>
-    <br/>
-    <input type = 'text' style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder="아이디" ref = {LoginRef} />
-    <br/>
-    <input type = 'password' style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="비밀번호" ref = {PasswordRef} />
-    <br/>
-    <br/>
-    <button onClick={Login} style={{ marginLeft : '320px', width : '100px' ,borderRadius : '100px'}}>로그인</button>
-    <br/>
-    <Link to = '/SignUp'><p style={{marginLeft : '350px' , marginTop : '10px'}}>회원가입</p></Link>
-    </div>
-    </table>
-    </>
+    <Transition in = {true} timeout = {700} appear>
+      {state => (
+         <div className={`pageSlider-${state}`}>
+         <table style={ {marginLeft : '280px', width : '450px' , height : '250px', position : 'absolute'}}>
+         <div style={ {padding : '30px', paddingRight:'50px'}}>
+         <h2 style={{marginLeft : '175px', color : 'cornflowerblue'}}>Login</h2>
+         <br/>
+         <input type = 'text' style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder="아이디" ref = {LoginRef} />
+         <br/>
+         <input type = 'password' style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="비밀번호" ref = {PasswordRef} />
+         <br/>
+         <br/>
+         <button onClick={Login} style={{ marginLeft : '15px', width : '400px' , borderRadius : '5px', backgroundColor : 'cornflowerblue'}}><span style={ { color : 'white'}}>로그인</span></button>
+         <br/>
+         </div>
+         </table>
+         </div>
+
+      )}
+    </Transition>
   );
 }
 

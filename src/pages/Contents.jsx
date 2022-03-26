@@ -3,6 +3,7 @@
   import queryString from 'query-string';
   import './Contents.css';
   import { Link } from 'react-router-dom';
+  import { Transition } from 'react-transition-group';
 
 
   function Contents(props) {
@@ -53,7 +54,7 @@
       })
     }
 
-    function contents() {
+    const contents = () =>  {
       if(posts !== undefined) {
         return posts.contents
       }
@@ -65,18 +66,23 @@
 
 
     return (
-      <div>
-        <p className='modify'>
-          <Link to={url}><button>수정</button></Link>
-          <button className='delete' onClick={comfirms}>삭제</button>
-          </p>
-        <p>제목 : {title()}</p>
-        <p>내용 : {contents()}</p>
-        <hr/>
-        <footer>
-        <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
-        </footer>
-      </div>
+      <Transition in = {true} timeout = {700} appear>
+        {state => (
+           <div style={ { position : 'absolute'}} className={`pageSlider-${state}`}>
+           <p className='modify'>
+             <Link to={url}><button>수정</button></Link>
+             <button className='delete' onClick={comfirms}>삭제</button>
+             </p>
+           <p>제목 : {title()}</p>
+           <p>내용 : {contents()}</p>
+           <hr/>
+           <footer>
+           <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
+           </footer>
+         </div>
+        )}
+     
+      </Transition>
     );
   }
 

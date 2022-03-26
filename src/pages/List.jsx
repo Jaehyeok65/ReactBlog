@@ -4,11 +4,13 @@
   import './List.css';
   import queryString from 'query-string';
   import { BsSearch } from 'react-icons/bs';
+  import Footer from './Footer';
+  import { Transition } from 'react-transition-group';
 
 
 
 
-  function List() {  //변수의 유효범위 == 스코프 스코프체인?
+  function List(props) {  //변수의 유효범위 == 스코프 스코프체인?
 
     const inputRef = useRef(false); //데이터를 검색할 input창을 Ref로 관리.
     const location = window.location.search; //
@@ -25,7 +27,6 @@
 
     const url = 'http://localhost:8088/list?pg='+query.pg+"&sz="+query.sz;
     const pagenum = Math.ceil(total/size);
-    console.log(page);
 
     
     useEffect(() => { //ComponentDidMount 역할 = 최초 렌더 되기전에 서버에서 데이터를 받아서 state에 저장.
@@ -81,6 +82,9 @@
     }
 
 
+
+
+
     
     
 
@@ -89,9 +93,13 @@
 
 
       return(
-        <div>
-        <hr />
-        <span style={ { marginLeft : '780px'}}>게시글 검색</span>
+        <>
+        <Transition in = {true} timeout = {700} appear>
+        {state => (
+          <div className={`pageSlider-${state}`}>
+           <br/>
+        <div style={ { position : 'absolute'}}>
+        <span style={ { marginLeft : '780px' , fontWeight : 'bold'}}>게시글 검색</span>
         <input type ='text' ref = {inputRef} style = { {marginLeft : '20px', borderRadius : '5px', borderColor : 'aliceblue'}} />
         <button type="button" className="btn" onClick={onSearch}><BsSearch style={ { marginBottom :'5px'}}/></button>
         <hr />
@@ -109,7 +117,12 @@
               })}
               <button className='custom-btn btn-16' onClick={() => setPage(page + 1)} disabled={page === pagenum}>&gt;</button>
             </footer>
+            <Footer />
+            </div>
           </div>
+        )}
+            </Transition>
+          </>
       );
             
   }

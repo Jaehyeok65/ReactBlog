@@ -3,6 +3,7 @@
     import queryString from 'query-string';
     import './Modify.css';
     import axios from 'axios';
+    import { Transition } from 'react-transition-group';
 
 
 
@@ -50,21 +51,26 @@
 
 
         return(
-            <div>
-                <input type='text' name='title' value = {inputs.title} placeholder='제목' className='inputs'
-                    onChange={onChange}
-                    />
-                    <button onClick={updates}>수정</button>
-                    <hr/>
-                    <br/>
-                    <br/>
-                    <textarea name='contents' value = {inputs.contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
-                    onChange={onChange}
-                    />
-                <footer>
-                <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
-                </footer>
-            </div>
+            <Transition in = {true} timeout = {700} appear>
+                {state => (
+                      <div style={ { postion : 'absolute'}} className={`pageSlider-${state}`}>
+                      <input type='text' name='title' value = {inputs.title} placeholder='제목' className='inputs'
+                          onChange={onChange}
+                          />
+                          <button onClick={updates}>수정</button>
+                          <hr/>
+                          <br/>
+                          <br/>
+                          <textarea name='contents' value = {inputs.contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
+                          onChange={onChange}
+                          />
+                      <footer>
+                      <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
+                      </footer>
+                  </div>
+
+                )}
+            </Transition>
         );
     }
 

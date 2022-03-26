@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Transition } from 'react-transition-group';
 
 
 const Password = () => {
@@ -44,18 +45,23 @@ const Password = () => {
 
     
     return (
-        <>
-        <table style={ {margin : 'auto', width : '450px' , height : '250px'}}>
-        <div style={ {padding : '30px', paddingRight:'50px'}}>
-        <h2 style={{marginLeft : '120px', color : 'cornflowerblue'}}>Find Password</h2>
-        <br/>
-        <input type = 'text' autocomplete="off"  value = {member.userId} name = 'userId' onChange = {onChange} style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="아이디를 입력하세요" required />
-        <br/>
-        <br/>
-        <button onClick = {IdCheck} style={ { borderRadius : '5px' , marginLeft : '290px', backgroundColor : 'cornflowerblue', color : 'white'}}>비밀번호 찾기</button>
-        </div>
-        </table>
-        </>
+        <Transition in = {true} timeout = {700} appear>
+        {state => (
+            <div className={`pageSlider-${state}`}>
+            <table style={ {marginLeft : '280px', width : '450px' , height : '250px', position : 'absolute'}}>
+            <div style={ {padding : '30px', paddingRight:'50px'}}>
+            <h2 style={{marginLeft : '120px', color : 'cornflowerblue'}}>Find Password</h2>
+            <br/>
+            <input type = 'text' autocomplete="off"  value = {member.userId} name = 'userId' onChange = {onChange} style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="아이디를 입력하세요" required />
+            <br/>
+            <br/>
+            <button onClick = {IdCheck} style={ { borderRadius : '5px' , marginLeft : '290px', backgroundColor : 'cornflowerblue', color : 'white'}}>비밀번호 찾기</button>
+            </div>
+            </table>
+            </div>
+        )}
+        
+        </Transition>
     )
       
 }
