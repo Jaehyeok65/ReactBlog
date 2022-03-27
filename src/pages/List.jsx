@@ -29,17 +29,29 @@
     const pagenum = Math.ceil(total/size);
 
     
+
+    
     useEffect(() => { //ComponentDidMount 역할 = 최초 렌더 되기전에 서버에서 데이터를 받아서 state에 저장.
       axios.get(url)
       .then(res => {
         setPost(res.data);
       });
 
-      axios.get('http://localhost:8088/recordcounts') //pagination 정보를 서버에서 받아와서 state에 저장.
-      .then(res => {
-        setTotal(res.data.recordCount);
-      });
+      const getRecord = async() => {
 
+      const response = await axios.get('http://localhost:8088/recordcounts') //pagination 정보를 서버에서 받아와서 state에 저장.
+      
+      setTotal(response.data.recordCount);
+
+      const querypage = parseInt(query.pg) % 5 === 0 ? parseInt(query.pg) - 1 : parseInt(query.pg);
+
+      const pg = Math.floor(parseInt(querypage) / 5) * 5;
+
+      setDefaultPage(pg);
+
+    }
+
+     getRecord();
     
     },[]);
 
@@ -106,16 +118,6 @@
     }
 
 
-
-
-
-    
-    
-
-   
-
-console.log(defaultPage);
-
       return(
         <>
         <Transition in = {true} timeout = {700} appear>
@@ -135,7 +137,7 @@ console.log(defaultPage);
             <footer className = 'footers'>
               <button className='custom-btn btn-16' onClick={LeftButton} disabled={page === 1}>&lt;</button>
               {Array(defaultPage >= pagenum - pagenum % 5 ? pagenum % 5 : 5).fill().map((v,i) => {
-                return <button className='custom-btn btn-16' key = {i+1} onClick={() => setPage(defaultPage + i + 1)}
+                return <button className='custom-btn btn-16' key = {i + 1} onClick={() => setPage(defaultPage + i + 1)}
                 style= { page === i + 1 ? {color : 'skyblue'} : null}
                 >{defaultPage + i + 1}</button>
               })}
