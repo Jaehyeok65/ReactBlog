@@ -23,7 +23,7 @@
     const [page,setPage] = useState(query.pg);  //let과 var의 차이점 공부하기
     const [total,setTotal] = useState(0);  //state를 쓰는 이유와 기준에 대해서 공부하기(render에 관여) 리팩토링 과정 git commit으로 남겨놓을 것
     const [search,setSearch] = useState(false); //검색한 post와 일반 post mode를 나누기 위한 search state
-
+    const [defaultPage,setDefaultPage] = useState(0); //pagenation을 관리하기 위한 state
 
     const url = 'http://localhost:8088/list?pg='+query.pg+"&sz="+query.sz;
     const pagenum = Math.ceil(total/size);
@@ -39,6 +39,8 @@
       .then(res => {
         setTotal(res.data.recordCount);
       });
+
+    
     },[]);
 
     
@@ -58,6 +60,8 @@
       })
     }
     },[page,size]);
+
+    
 
   
   
@@ -81,6 +85,26 @@
       
     }
 
+    const LeftButton = () => {
+
+      const defalutnum = defaultPage - 5 < 1 ? 0 : defaultPage - 5; //1보다 작을 순 없으므로 1보다 작다면 1로 수정
+      //const defalutnum = defaultPage - 5
+      const dp = page - 5 < 1 ? 1 : page - 5;
+
+      setDefaultPage(defalutnum);
+      setPage(dp);
+    }
+
+    const RightButton = () => {
+
+      const defalutnum = defaultPage + 5 > pagenum ? pagenum - pagenum % 5 : defaultPage + 5; //1보다 작을 순 없으므로 1보다 작다면 1로 수정
+      //const defalutnum = defaultPage + 5;
+      const dp = page + 5 > pagenum ? pagenum : page + 5;
+
+      setDefaultPage(defalutnum);
+      setPage(dp);
+    }
+
 
 
 
@@ -90,7 +114,7 @@
 
    
 
-
+console.log(defaultPage);
 
       return(
         <>
@@ -109,13 +133,13 @@
             })}
             </div>
             <footer className = 'footers'>
-              <button className='custom-btn btn-16' onClick={() => setPage(page - 1)} disabled={page === 1}>&lt;</button>
-              {Array(pagenum).fill().map((v,i) => {
-                return <button className='custom-btn btn-16' key = {i+1} onClick={() => setPage(i+1)}
+              <button className='custom-btn btn-16' onClick={LeftButton} disabled={page === 1}>&lt;</button>
+              {Array(defaultPage >= pagenum - pagenum % 5 ? pagenum % 5 : 5).fill().map((v,i) => {
+                return <button className='custom-btn btn-16' key = {i+1} onClick={() => setPage(defaultPage + i + 1)}
                 style= { page === i + 1 ? {color : 'skyblue'} : null}
-                >{i + 1}</button>
+                >{defaultPage + i + 1}</button>
               })}
-              <button className='custom-btn btn-16' onClick={() => setPage(page + 1)} disabled={page === pagenum}>&gt;</button>
+              <button className='custom-btn btn-16' onClick={RightButton} disabled={page === pagenum}>&gt;</button>
             </footer>
             <Footer />
             </div>
