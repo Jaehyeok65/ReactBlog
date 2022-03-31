@@ -88,20 +88,25 @@
         title : inputRef.current.value
       });
 
+     
+
 
       setTotal(response2.data.recordCount);  //검색 결과 총 record 설정
 
       setPost(response.data);    //검색 결과
 
       setSearch(true);  //검색한 상태임을 알려줌
+
+      setPage(1); //검색했으므로 1페이지로 설정
       
     }
 
     const LeftButton = () => {
 
       const defalutnum = defaultPage - 5 < 1 ? 0 : defaultPage - 5; //1보다 작을 순 없으므로 1보다 작다면 1로 수정
-      //const defalutnum = defaultPage - 5
-      const dp = page - 5 < 1 ? 1 : page - 5;
+      const pages = parseInt(page);
+      const dp = pages - 5 < 1 ? 1 : pages - 5;
+      console.log(dp);
 
       setDefaultPage(defalutnum);
       setPage(dp);
@@ -109,13 +114,17 @@
 
     const RightButton = () => {
 
-      const defalutnum = defaultPage + 5 > pagenum ? pagenum - pagenum % 5 : defaultPage + 5; //1보다 작을 순 없으므로 1보다 작다면 1로 수정
-      //const defalutnum = defaultPage + 5;
-      const dp = page + 5 > pagenum ? pagenum : page + 5;
+      const defalutnum = defaultPage + 5 > pagenum ? pagenum - pagenum % 5 : defaultPage + 5; 
+      const pages = parseInt(page);
+      const dp = pages + 5 > pagenum ? pagenum : pages + 5;
+      console.log(dp);
 
       setDefaultPage(defalutnum);
       setPage(dp);
     }
+
+
+    //console.log(defaultPage);
 
 
       return(
