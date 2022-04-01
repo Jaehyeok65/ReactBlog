@@ -1,7 +1,8 @@
-    import React,{ useState } from 'react';
-    import './Write.css';
-    import axios from 'axios';
-    import queryString from 'query-string';
+import React,{ useState, useEffect } from 'react';
+import './Write.css';
+import axios from 'axios';
+import queryString from 'query-string';
+import { Transition } from 'react-transition-group';
 
     function Writes() {
 
@@ -12,11 +13,24 @@
         let [title,setTitle] = useState()
         let [contents,setContents] = useState()
 
+        useEffect( () => {
+
+            axios.post('http://localhost:8088/sessioncheck', {
+                sessionId : sessionStorage.getItem('sessionId')
+            }).then(res => {
+                if(!res.data) {
+                    alert('로그인이 필요합니다.');
+                    document.location.href = '/login';
+                }
+            })
+
+        },[])
+
 
         const posts = () => {
             axios.post(url, {
                 title : title,
-                contents : contents
+                contents : contents,
             })
             .then(res => {
                 document.location.href = "/list?pg="+res.data+"&sz="+query.sz;
@@ -35,18 +49,25 @@
 
 
         return(
-            <div>
-                    <input type='text' name='title' value = {title} placeholder='제목' className='inputs'
-                    onChange={handletitleChange}
-                    />
-                    <button onClick={posts}>발행</button>
-                    <hr/>
-                    <br/>
-                    <br/>
-                    <textarea name='contents' value = {contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
-                    onChange={handlecontentsChange}
-                    />
-            </div>
+            <>
+            <Transition in = {true} timeout = {700} appear>
+                {state => (
+                      <div className={`pageSlider-${state}`} style={ { postion : 'absolute'}}>
+                      <br/>
+                      <input type='text' name='title' value = {title} placeholder='제목' className='inputs'
+                      onChange={handletitleChange}
+                      />
+                      <button onClick={posts} style = { { width : '100px', backgroundColor : 'cornflowerblue', color : 'white', borderRadius : '5px', marginLeft : '10px'}}>발행</button>
+                      <hr/>
+                      <br/>
+                      <br/>
+                      <textarea name='contents' value = {contents} placeholder='#을 이용하여 태그를 추가해보세요' className='inputs2'
+                      onChange={handlecontentsChange}
+                      />
+              </div>
+                )}
+            </Transition>
+            </>
         );
     }
 

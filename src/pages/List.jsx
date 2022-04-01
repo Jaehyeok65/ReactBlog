@@ -55,6 +55,8 @@
     
     },[]);
 
+    //console.log(window.sessionStorage.getItem('sessionId'));
+
     
 
     useEffect(() => {  //search일때와 search가 아닐 때 분기해서 axios 실행
@@ -72,6 +74,7 @@
       })
     }
     },[page,size]);
+
 
     
 

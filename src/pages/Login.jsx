@@ -39,11 +39,14 @@ function Login() {
     const LoginRef = useRef(false);
     const PasswordRef = useRef(false);
 
+    
+
     const [state, dispatch] = useReducer(reducer, {
       loading: false,
       data: null,
       error: null
     });
+
 
     
 
@@ -57,11 +60,14 @@ function Login() {
             }
           );
           dispatch({ type: 'SUCCESS', data: response.data });
-          if(response.data) {
-            alert('로그인에 성공했습니다.');
+
+          if(!response.data) {
+            alert('로그인에 실패하였습니다.');
           }
           else {
-            alert('로그인에 실패했습니다.');
+            window.sessionStorage.setItem('sessionId',response.data); // sessionId 키로 세션 Id value 저장.
+            alert('로그인에 성공하였습니다.');
+            document.location.href='/';
           }
         } catch (e) {
           dispatch({ type: 'ERROR', error: e });
@@ -71,14 +77,6 @@ function Login() {
      
 
      
-    if(state.data) {
-      return <div>
-        <h2>로그인 완료</h2>
-        <button onClick = {() => {
-          dispatch({ type : 'SUCCESS', data : false})
-        }}>로그아웃</button>
-      </div>
-    };
 
   
 
