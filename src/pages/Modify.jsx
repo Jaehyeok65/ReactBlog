@@ -22,7 +22,9 @@
 
         useEffect(() => {
 
-            axios.get('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz)
+            axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
+                sessionId : sessionStorage.getItem('sessionId')
+            })
             .then(res => {
                 setInputs({title : res.data.title, contents : res.data.contents});
                 console.log(res.data);
