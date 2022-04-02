@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 const Nav = () => {
@@ -8,6 +9,19 @@ const Nav = () => {
     const listurl = '/list?pg=1&sz=10';
     const writeurl = '/write?pg=1&sz=10';
     const homeurl = '/?pg=1&sz=10';
+
+    const [login, setLogin] = useState(false); //login이 true면 로그인 상태 false면 비로그인 상태
+
+    useEffect( () => {  //로그인 상태 체크 (세션 스토리지의 세션 id가 유효한지)
+      axios.post('http://localhost:8088/user/sessioncheck', {
+        sessionId : window.sessionStorage.getItem('sessionId')
+      }).then( res => {
+        setLogin(res.data);
+      })
+      
+    },[])
+
+    
 
     const clears = () => {
       alert('로그아웃이 완료되었습니다.');
@@ -36,7 +50,7 @@ const Nav = () => {
         <span className='span1'><Link to={homeurl}>블로그 홈</Link></span>
         <span className='span2'><Link to={writeurl}>게시글 쓰기</Link></span>
         <span className='span3'><Link to={listurl}>포스트 목록보기</Link></span>
-        {sessionStorage.getItem('sessionId') === null ? <span className='span6'><Link to='/login'>로그인</Link></span> : <span className='span6'><button onClick = {clears} style = { { border : 'none', backgroundColor : 'white' , color : 'blue', textDecoration : 'underline'}}>로그아웃</button></span>}
+        {!login ? <span className='span6'><Link to='/login'>로그인</Link></span> : <span className='span6'><button onClick = {clears} style = { { border : 'none', backgroundColor : 'white' , color : 'blue', textDecoration : 'underline'}}>로그아웃</button></span>}
         <span className='span7'><Link to ='/signUp'>회원가입</Link></span>
         <span className='span8'><Link to ='/Password'>비밀번호 찾기</Link></span>
         </div>
