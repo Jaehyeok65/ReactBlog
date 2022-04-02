@@ -61,8 +61,28 @@ function Login() {
           );
           dispatch({ type: 'SUCCESS', data: response.data });
 
-          if(!response.data) {
+          
+
+          if(!response.data) {  //아이디 비밀번호가 다른 경우 == false 리턴
             alert('로그인에 실패하였습니다.');
+          }
+          else if(response.data === "overlap") {
+            const result = confirm("다른 사용자가 로그인 중 입니다. 해당 사용자의 연결을 끊고 로그인 하시겠습니까?");
+            if(result) {
+              const responses = await axios.post(
+                'http://localhost:8088/user/Logins', {
+                  userId : LoginRef.current.value,
+                  userPassword : PasswordRef.current.value
+                }
+              );
+              window.sessionStorage.setItem('sessionId',responses.data); // sessionId 키로 세션 Id value 저장.
+              alert('로그인에 성공하였습니다.');
+              document.location.href='/';
+            }
+
+            else {
+              alert('로그인을 취소하였습니다.');
+            }
           }
           else {
             window.sessionStorage.setItem('sessionId',response.data); // sessionId 키로 세션 Id value 저장.
