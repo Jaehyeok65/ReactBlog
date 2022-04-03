@@ -12,6 +12,7 @@ import { Transition } from 'react-transition-group';
 
         let [title,setTitle] = useState()
         let [contents,setContents] = useState()
+        const [fileitem,setFileitem] = useState([]);
 
         useEffect( () => {
 
@@ -37,6 +38,15 @@ import { Transition } from 'react-transition-group';
             })
         }
 
+        const onChanges = (e) => {
+            let files = [...fileitem];
+            let file = files.concat(e.target.files[0]);
+            setFileitem(file);
+            console.log(file);
+           // console.log(e.target.files[0]);
+        }
+
+
         const handletitleChange = (e) => {
             setTitle(e.target.value);
         };
@@ -54,6 +64,7 @@ import { Transition } from 'react-transition-group';
                 {state => (
                       <div className={`pageSlider-${state}`} style={ { postion : 'absolute'}}>
                       <br/>
+                      <input name = 'fileitem' type = 'file' multiple onChange={onChanges} />
                       <input type='text' name='title' value = {title} placeholder='제목' className='inputs'
                       onChange={handletitleChange}
                       />
