@@ -16,11 +16,12 @@
 
 
     const [posts,setPosts] = useState();
+    const [admin,setAdmin] = useState(false);
 
     useEffect(() => {
 
       axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
-        sessionId : JSON.parse(window.localStorage.getItem('usersId')) === null ? null : (JSON.parse(window.localStorage.getItem('usersId'))).sessionId
+        sessionId : JSON.parse(window.localStorage.getItem('userId')) === null ? null : (JSON.parse(window.localStorage.getItem('userId'))).sessionId
     })
       .then(res => {
         if(res.data.title === null) {
@@ -28,6 +29,7 @@
           document.location.href = '/login';
         }
         setPosts(res.data);
+        setAdmin(res.data.userId);
       })
     },[])
 
@@ -75,13 +77,14 @@
       <Transition in = {true} timeout = {700} appear>
         {state => (
            <div style={ { position : 'absolute'}} className={`pageSlider-${state}`}>
-           <p className='modify'>
+           { admin ===  (JSON.parse(window.localStorage.getItem('userId'))).userId ? <p className='modify'>
              <Link to={url}><button>수정</button></Link>
              <button className='delete' onClick={comfirms}>삭제</button>
-             </p>
+             </p> : null }
            <p>제목 : {title()}</p>
            <p>내용 : {contents()}</p>
-           <hr/>
+           <p>{admin}</p>
+           <hr style={ {width : '1120px'}}/>
            <footer>
            <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
            </footer>
