@@ -15,9 +15,14 @@ import { Transition } from 'react-transition-group';
         const [fileitem,setFileitem] = useState([]);
 
         useEffect( () => {
+            let values = window.localStorage.getItem('usersId');
+            let value = JSON.parse(values);
+            if(value !== null) {
+                value = value.sessionId;
+            }
 
             axios.post('http://localhost:8088/sessioncheck', {
-                sessionId : sessionStorage.getItem('sessionId')
+                sessionId : value
             }).then(res => {
                 if(!res.data) {
                     alert('로그인이 필요합니다.');
@@ -64,7 +69,6 @@ import { Transition } from 'react-transition-group';
                 {state => (
                       <div className={`pageSlider-${state}`} style={ { postion : 'absolute'}}>
                       <br/>
-                      <input name = 'fileitem' type = 'file' multiple onChange={onChanges} />
                       <input type='text' name='title' value = {title} placeholder='제목' className='inputs'
                       onChange={handletitleChange}
                       />

@@ -61,7 +61,7 @@ function Login() {
           );
           dispatch({ type: 'SUCCESS', data: response.data });
 
-          
+          console.log(response.data);
 
           if(!response.data) {  //아이디 비밀번호가 다른 경우 == false 리턴
             alert('로그인에 실패하였습니다.');
@@ -75,7 +75,13 @@ function Login() {
                   userPassword : PasswordRef.current.value
                 }
               );
-              window.sessionStorage.setItem('sessionId',responses.data); // sessionId 키로 세션 Id value 저장.
+              const now = new Date();
+              const values = {
+                value : LoginRef.current.value,
+                sessionId : responses.data,
+                expire : now.getTime() + 1000 * 60 * 30
+              }
+              window.localStorage.setItem('usersId',JSON.stringify(values));
               alert('로그인에 성공하였습니다.');
               document.location.href='/';
             }
@@ -83,9 +89,16 @@ function Login() {
             else {
               alert('로그인을 취소하였습니다.');
             }
+            
           }
           else {
-            window.sessionStorage.setItem('sessionId',response.data); // sessionId 키로 세션 Id value 저장.
+            const now = new Date();
+            const values = {
+              value : LoginRef.current.value,
+              sessionId : response.data,
+              expire : now.getTime() + 1000 * 60 * 30
+            }
+            window.localStorage.setItem('usersId',JSON.stringify(values));
             alert('로그인에 성공하였습니다.');
             document.location.href='/';
           }
@@ -93,6 +106,8 @@ function Login() {
           dispatch({ type: 'ERROR', error: e });
         }
       };
+
+      
 
      
 

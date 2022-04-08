@@ -20,13 +20,12 @@
     useEffect(() => {
 
       axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
-        sessionId : window.sessionStorage.getItem('sessionId')
+        sessionId : JSON.parse(window.localStorage.getItem('usersId')) === null ? null : (JSON.parse(window.localStorage.getItem('usersId'))).sessionId
     })
       .then(res => {
         if(res.data.title === null) {
           alert('로그인이 필요합니다.');
           document.location.href = '/login';
-          window.sessionStorage.key();
         }
         setPosts(res.data);
       })

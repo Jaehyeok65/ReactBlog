@@ -13,21 +13,41 @@ const Nav = () => {
     const [login, setLogin] = useState(false); //login이 true면 로그인 상태 false면 비로그인 상태
 
     useEffect( () => {  //로그인 상태 체크 (세션 스토리지의 세션 id가 유효한지)
+      let values = window.localStorage.getItem('usersId');
+      let value = JSON.parse(values);
+      if(value !== null) {
+        value = value.sessionId;
+      }
       axios.post('http://localhost:8088/user/sessioncheck', {
-        sessionId : window.sessionStorage.getItem('sessionId')
+        sessionId : value
       }).then( res => {
         setLogin(res.data);
       })
-      
     },[])
 
     
 
-    const clears = () => {
-      alert('로그아웃이 완료되었습니다.');
-      window.sessionStorage.clear();
-      document.location.href='/login';
+    const Logout = () => {
+      
+      /*let values = window.localStorage.getItem('usersId');
+      let value = JSON.parse(values);
+      if(value !== null) {
+        value = value.value;
+      }*/
+      axios.post('http://localhost:8088/user/logout', {
+        userId : JSON.parse(window.localStorage.getItem('usersId')) === null ? null : (JSON.parse(window.localStorage.getItem('usersId'))).value
+      }).then ( res => {
+        if(res.data) {
+          alert('로그아웃이 완료되었습니다.');
+          window.localStorage.clear();
+          document.location.href='/login';
+        }
+      })
+
     }
+
+  
+    
 
     return (
         <>
@@ -50,7 +70,7 @@ const Nav = () => {
         <span className='span1'><Link to={homeurl}>블로그 홈</Link></span>
         <span className='span2'><Link to={writeurl}>게시글 쓰기</Link></span>
         <span className='span3'><Link to={listurl}>포스트 목록보기</Link></span>
-        {!login ? <span className='span6'><Link to='/login'>로그인</Link></span> : <span className='span6'><button onClick = {clears} style = { { border : 'none', backgroundColor : 'white' , color : 'blue', textDecoration : 'underline'}}>로그아웃</button></span>}
+        {!login ? <span className='span6'><Link to='/login'>로그인</Link></span> : <span className='span6'><button onClick = {Logout} style = { { border : 'none', backgroundColor : 'white' , color : 'blue', textDecoration : 'underline'}}>로그아웃</button></span>}
         <span className='span7'><Link to ='/signUp'>회원가입</Link></span>
         <span className='span8'><Link to ='/Password'>비밀번호 찾기</Link></span>
         </div>
