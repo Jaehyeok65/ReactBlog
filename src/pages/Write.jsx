@@ -12,17 +12,16 @@ import { Transition } from 'react-transition-group';
 
         let [title,setTitle] = useState()
         let [contents,setContents] = useState()
-        const [fileitem,setFileitem] = useState([]);
 
         useEffect( () => {
-            let values = window.localStorage.getItem('usersId');
-            let value = JSON.parse(values);
-            if(value !== null) {
-                value = value.sessionId;
+            let values = window.localStorage.getItem('userId');
+            let sessionId = JSON.parse(values);
+            if(sessionId !== null) {
+                sessionId = sessionId.sessionId;
             }
 
             axios.post('http://localhost:8088/sessioncheck', {
-                sessionId : value
+                sessionId : sessionId
             }).then(res => {
                 if(!res.data) {
                     alert('로그인이 필요합니다.');
@@ -37,18 +36,11 @@ import { Transition } from 'react-transition-group';
             axios.post(url, {
                 title : title,
                 contents : contents,
+                userId : (JSON.parse(window.localStorage.getItem('userId'))).userId
             })
             .then(res => {
                 document.location.href = "/list?pg="+res.data+"&sz="+query.sz;
             })
-        }
-
-        const onChanges = (e) => {
-            let files = [...fileitem];
-            let file = files.concat(e.target.files[0]);
-            setFileitem(file);
-            console.log(file);
-           // console.log(e.target.files[0]);
         }
 
 

@@ -23,7 +23,7 @@
         useEffect(() => {
 
             axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
-                sessionId : sessionStorage.getItem('sessionId')
+                sessionId : (JSON.parse(window.localStorage.getItem('userId'))).sessionId
             })
             .then(res => {
                 setInputs({title : res.data.title, contents : res.data.contents});
@@ -44,7 +44,8 @@
             axios.post(updateurl, {
                 id : query.id,
                 title : inputs.title,
-                contents : inputs.contents
+                contents : inputs.contents,
+                userId : (JSON.parse(window.localStorage.getItem('userId'))).userId
             })
             .then(res => {
                 document.location.href = "/contents?id="+res.data.id+"&pg="+query.pg+"&sz="+query.sz;
