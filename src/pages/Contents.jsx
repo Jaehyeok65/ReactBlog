@@ -4,6 +4,7 @@
   import './Contents.css';
   import { Link } from 'react-router-dom';
   import { Transition } from 'react-transition-group';
+  import Comment from './Comment';
 
 
   function Contents(props) {
@@ -16,11 +17,13 @@
 
 
     const [posts,setPosts] = useState();
-    const [admin,setAdmin] = useState(false);
+    const [admin,setAdmin] = useState(null);
 
     useEffect(() => {
 
-      axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
+      fetchs();
+
+      /*axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
         sessionId : JSON.parse(window.localStorage.getItem('userId')) === null ? null : (JSON.parse(window.localStorage.getItem('userId'))).sessionId
     })
       .then(res => {
@@ -30,8 +33,25 @@
         }
         setPosts(res.data);
         setAdmin(res.data.userId);
-      })
+      })*/
     },[])
+
+    const fetchs = async() => {
+      
+        const response = await axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
+              sessionId : JSON.parse(window.localStorage.getItem('userId')) === null ? null : (JSON.parse(window.localStorage.getItem('userId'))).sessionId
+               })
+        
+        if(response.data === null) {
+          alert('로그인이 필요합니다.');
+          document.location.href = '/login';
+        }
+        
+        setPosts(response.data);
+        setAdmin(response.data.userId);
+    }
+
+    
 
 
     const title = () => {
@@ -83,10 +103,10 @@
              </p> : null }
            <p>제목 : {title()}</p>
            <p>내용 : {contents()}</p>
-           <p>{admin}</p>
            <hr style={ {width : '1120px'}}/>
+           <Comment contentId = {query.id} userId = {admin} />
            <footer>
-           <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
+           <p className='listurl' style={ { marginLeft : '1040px'}}><Link to={listurl}><button>목록으로</button></Link></p>
            </footer>
          </div>
         )}
