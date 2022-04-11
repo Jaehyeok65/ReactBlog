@@ -4,8 +4,8 @@
   import './List.css';
   import queryString from 'query-string';
   import { BsSearch } from 'react-icons/bs';
-  import Footer from './Footer';
   import { Transition } from 'react-transition-group';
+  import Category from './Category';
 
 
 
@@ -16,6 +16,7 @@
     const location = window.location.search; //
     const query = queryString.parse(location);
     const size = query.sz;
+    const category = query.category;
 
 
     const [post,setPost] = useState([]); //게시글 담을 state 선언  
@@ -61,7 +62,7 @@
 
     useEffect(() => {  //search일때와 search가 아닐 때 분기해서 axios 실행
     if(!search){
-      axios.get('http://localhost:8088/list?pg='+page+"&sz="+size)
+      axios.get('http://localhost:8088/list?pg='+page+"&sz="+size+"&category="+category)
       .then(res => {
         setPost(res.data);
       })
@@ -90,6 +91,9 @@
       const response2 = await axios.post('http://localhost:8088/searchcounts', { //검색 결과 총 record를 받아옴
         title : inputRef.current.value
       });
+
+      console.log(response2.data.recordCount);
+      console.log(response.data.length);
 
      
 
@@ -126,6 +130,22 @@
       setPage(dp);
     }
 
+    const getData = async(data) => {
+      console.log(data);
+
+      const response = await axios.post('http://localhost:8088/categorylist', {
+        category : data
+      })
+
+      const response2 = await axios.post('http://localhost:8088/categorycounts', {
+        category : data
+      })
+
+      setPost(response.data);
+      setTotal(response2.data.recordCount);
+      console.log(response.data.length);
+    }
+
 
     //console.log(defaultPage);
 
@@ -136,12 +156,13 @@
         {state => (
           <div className={`pageSlider-${state}`}>
            <br/>
-        <div style={ { position : 'absolute'}}>
+        <div>
         <span style={ { marginLeft : '780px' , fontWeight : 'bold'}}>게시글 검색</span>
         <input type ='text' ref = {inputRef} style = { {marginLeft : '20px', borderRadius : '5px', borderColor : 'aliceblue'}} />
         <button type="button" className="btn" onClick={onSearch}><BsSearch style={ { marginBottom :'5px'}}/></button>
         <hr />
-            <div>
+            <Category getData = {getData} />
+            <div style={ { marginLeft : '250px'}}>
             {post.map(post => {
               return <Modal title={post.title} contents={String(post.contents).substring(0,77)} id = {post.id} pg = {page} sz = {size} key = {post.id} />
             })}
@@ -155,7 +176,6 @@
               })}
               <button className='custom-btn btn-16' onClick={RightButton} disabled={page === pagenum}>&gt;</button>
             </footer>
-            <Footer />
             </div>
           </div>
         )}
