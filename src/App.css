@@ -6,47 +6,44 @@ body {
   font-family: 'nanumsqare';
 }
 
+a {
+  outline: 'none';
+}
+
+
+
 .transition-group {
   position: relative;
 }
 
 .fade-enter {
   opacity: 0;
-  transform: translateX(100%) rotateZ(45deg);
 }
 
 .fade-enter-active {
   opacity: 1;
-  transform: translateX(-50%) rotateZ(0);
-  transition: all 1s ease-in;
+  transition: opacity 700ms;
 }
 
 .fade-exit {
   opacity: 1;
-  transform: translateX(-50%) rotateZ(0);
 }
 
 .fade-exit-active {
   opacity: 0;
-  transform: translateX(-100%) rotateZ(-45deg);
-  transition: all 1s ease-in;
+  transition: opacity 700ms;
 }
+
+
+
+
 
 .item1 {
   font-size : 25px;
 }
-.item2 {
-  width: 100px;
-  margin-left : 550px;
- 
-}
-.item3 {
-  margin-left:10px;
-}
 
-.item4 {
-  margin-left:30px;
-}
+
+
 .input-bar {
   width: 250px;
   height: 35px;
@@ -68,14 +65,15 @@ body {
   
 }
 
-.nav {
-
+.navbar {
   background: cornflowerblue;
   width: 100%;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: row; /*중심축 결정 */
   position: sticky;  /*고정 (스크롤해도 화면에 고정*/
-  padding: 20px;
+  padding: 12px 8px;
   color: cornsilk;
   
 }
@@ -87,83 +85,31 @@ body {
 
 
 .margin1 {
-  margin-left:200px;
-  margin-right:200px;
+  margin-left: 13%;
+  margin-right: 13%;
 }
 
 .margin2 {
-  margin-left:180px;
-  margin-right:200px;
+  margin-left: 13%;
+  font-size: 25px;
 }
-.span1 {
-  font-size:12px;
-}
-
-.span2 {
-  margin-left : 10px;
-  font-size:12px;
+.navmenu {
+  display: flex;
+  flex-direction: row;
+  margin-right: 13%;
 }
 
-.span3 {
-  margin-left : 10px;
-  font-size:12px;
-}
-
-.span4 {
-  margin-left : 10px;
-  font-size:12px;
-}
-
-.span5 {
-  margin-left : 10px;
-  font-size:12px;
-}
-
-.span6 {
-  margin-left : 400px;
-  font-size:12px;
-}
-
-.span7 {
-  margin-left : 30px;
-  font-size:12px;
-}
-
-.span8 {
-  margin-left : 20px;
+.navmenu li {
+  list-style: none;
+  padding: 8px;
+  color: white;
   font-size: 12px;
 }
 
-.span9 {
-  margin-left : 20px;
-}
 
-.span10 {
-  margin-left : 20px;
-  font-weight: bolder;
-}
 
-.span11 {
-  margin-left : 20px;
-}
 
-.span12 {
-  margin-left : 20px;
-}
 
-.span13 {
-  margin-left : 20px;
-}
-
-.nav2 {
-
-  width: 100%;
-  display: flex;
-  flex-direction: row; /*중심축 결정 */
-  padding: 20px;
-  color: black;
-  
-}
 
 
 

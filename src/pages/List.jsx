@@ -16,7 +16,6 @@
     const location = window.location.search; //
     const query = queryString.parse(location);
     const size = query.sz;
-    const category = query.category;
 
 
     const [post,setPost] = useState([]); //게시글 담을 state 선언  
@@ -27,7 +26,9 @@
     const [defaultPage,setDefaultPage] = useState(0); //pagenation을 관리하기 위한 state
 
     const url = 'http://localhost:8088/list?pg='+query.pg+"&sz="+query.sz;
-    const pagenum = Math.ceil(total/size);
+    let pagenum = Math.ceil(total/size);
+    
+    
 
     
 
@@ -62,7 +63,7 @@
 
     useEffect(() => {  //search일때와 search가 아닐 때 분기해서 axios 실행
     if(!search){
-      axios.get('http://localhost:8088/list?pg='+page+"&sz="+size+"&category="+category)
+      axios.get('http://localhost:8088/list?pg='+page+"&sz="+size)
       .then(res => {
         setPost(res.data);
       })
@@ -92,8 +93,6 @@
         title : inputRef.current.value
       });
 
-      console.log(response2.data.recordCount);
-      console.log(response.data.length);
 
      
 
@@ -121,14 +120,19 @@
 
     const RightButton = () => {
 
-      const defalutnum = defaultPage + 5 > pagenum ? pagenum - pagenum % 5 : defaultPage + 5; 
+      
+      let defalutnum = defaultPage + 5 > pagenum ? pagenum - pagenum % 5 : defaultPage + 5; 
+      defalutnum = defalutnum >= pagenum ? defalutnum - 5 : defalutnum;
       const pages = parseInt(page);
       const dp = pages + 5 > pagenum ? pagenum : pages + 5;
       console.log(dp);
+      console.log(defalutnum);
 
       setDefaultPage(defalutnum);
       setPage(dp);
     }
+
+    
 
     const getData = async(data) => {
       console.log(data);
@@ -157,9 +161,11 @@
           <div className={`pageSlider-${state}`}>
            <br/>
         <div>
-        <span style={ { marginLeft : '780px' , fontWeight : 'bold'}}>게시글 검색</span>
+        <div className='search'>
+        <span className='bold'>게시글 검색</span>
         <input type ='text' ref = {inputRef} style = { {marginLeft : '20px', borderRadius : '5px', borderColor : 'aliceblue'}} />
         <button type="button" className="btn" onClick={onSearch}><BsSearch style={ { marginBottom :'5px'}}/></button>
+        </div>
         <hr />
             <Category getData = {getData} />
             <div style={ { marginLeft : '250px'}}>

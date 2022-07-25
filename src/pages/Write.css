@@ -1,10 +1,26 @@
 .inputs {
     border: none;
-
-    width: 1000px;
-    
     font-size: 30px;
+}
 
+.flexcontainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.items:nth-child(1) {
+    flex : 9;
+    border: none;
+}
+
+
+
+.items:nth-child(2) {
+    flex : 1;
+}
+.flex2 { 
+    display: flex;
 }
 
 .inputs2 {
