@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import queryString from 'query-string';
+import './List.css';
 
 
 
@@ -61,16 +62,18 @@ const Category = (props) => {
 
     return (
         <>
-        <div style={ { width : '200px', height : '400px', display : 'inline-block' , position : 'absolute' }}>
+        <div>
             <button style={ { marginLeft : '5px' , border : 'none', background : 'white', fontSize : '12px'}} onClick = { () => { setModal(!modal)}}>카테고리 추가</button>
             <hr/>
+            <div className='cate'>
             { categorys.map( (categorys,i) => {
-                 return <button key = {i} style = { { marginLeft : '60px', fontSize : '12px', border : 'none', backgroundColor : 'white'}}
+                 return <button key = {i} className='item1'
                  onClick = {() => {
                     props.getData(categorys.category);
                  }}
                  >{ categorys.category }</button>
             })}
+            </div>
         </div>
         <Modal show = {modal}>
             <Modal.Header>

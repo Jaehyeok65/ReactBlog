@@ -19,12 +19,53 @@
 
   .search {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
   }
+
+  .cate{
+    display: flex;
+    align-items: center;
+    width: 200px;
+    flex-direction: column;
+  }
+
+  .item1:nth-child(1) {
+    font-size: 12px;
+    border: none;
+    background-color: white;
+  }
+
+  
+  .item1:nth-child(2) {
+    font-size: 12px;
+    border : none;
+    background-color: white;
+  }
+  
+  .item1:nth-child(3) {
+    font-size: 12px;
+    border : none;
+    background-color: white;
+  }
+
+
 
   .bold {
     font-weight: bold;
   }
+
+  .container {
+    display: flex;
+  }
+
+  .item:nth-child(1) {
+    flex : 1;
+  }
+  .item:nth-child(2) {
+   flex : 1;
+    margin-left: 30px;
+  }
+
 
   .btn-16 {
     border: none;

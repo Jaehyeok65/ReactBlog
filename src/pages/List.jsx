@@ -167,11 +167,13 @@
         <button type="button" className="btn" onClick={onSearch}><BsSearch style={ { marginBottom :'5px'}}/></button>
         </div>
         <hr />
-            <Category getData = {getData} />
-            <div style={ { marginLeft : '250px'}}>
+            <div className='container'>
+            <Category getData = {getData} className='item' />
+            <div className='item'>
             {post.map(post => {
               return <Modal title={post.title} contents={String(post.contents).substring(0,77)} id = {post.id} pg = {page} sz = {size} key = {post.id} />
             })}
+            </div>
             </div>
             <footer className = 'footers'>
               <button className='custom-btn btn-16' onClick={LeftButton} disabled={page === 1}>&lt;</button>
