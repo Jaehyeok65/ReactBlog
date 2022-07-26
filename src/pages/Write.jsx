@@ -82,7 +82,7 @@ import { Transition } from 'react-transition-group';
                     <div className={`pageSlider-${state}`}>
                     <div className='flexcontainer'>
                     <span className='item'>카테고리 선택</span>
-                    <select  style = { { marginLeft : '25px', border : 'none', fontSize : '12px' } }onChange={handleselectChange}>
+                    <select  style = { { marginLeft : '25px', border : 'none', fontSize : '12px' } } onChange={handleselectChange}>
                     <option value = "">선택</option>
                         {category.map( category => {
                             return <option value = {category.category} >{category.category}</option>

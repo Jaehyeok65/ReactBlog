@@ -5,6 +5,7 @@
   import { Link } from 'react-router-dom';
   import { Transition } from 'react-transition-group';
   import Comment from './Comment';
+  import Category from './Category';
 
 
   function Contents(props) {
@@ -21,9 +22,9 @@
 
     useEffect(() => {
 
-      fetchs();
+      
 
-      /*axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
+      axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
         sessionId : JSON.parse(window.localStorage.getItem('userId')) === null ? null : (JSON.parse(window.localStorage.getItem('userId'))).sessionId
     })
       .then(res => {
@@ -33,10 +34,10 @@
         }
         setPosts(res.data);
         setAdmin(res.data.userId);
-      })*/
+      })
     },[])
 
-    const fetchs = async() => {
+    /*const fetchs = async() => {
       
         const response = await axios.post('http://localhost:8088/contents?id='+query.id+'&pg='+query.pg+'&sz='+query.sz, {
               sessionId : JSON.parse(window.localStorage.getItem('userId')) === null ? null : (JSON.parse(window.localStorage.getItem('userId'))).sessionId
@@ -49,7 +50,7 @@
         
         setPosts(response.data);
         setAdmin(response.data.userId);
-    }
+    }*/
 
     
 
@@ -96,18 +97,35 @@
     return (
       <Transition in = {true} timeout = {700} appear>
         {state => (
-           <div style={ { position : 'absolute'}} className={`pageSlider-${state}`}>
+           <div className={`pageSlider-${state}`}>
+          <div>
            { admin ===  (JSON.parse(window.localStorage.getItem('userId'))).userId ? <p className='modify'>
-             <Link to={url}><button>수정</button></Link>
-             <button className='delete' onClick={comfirms}>삭제</button>
+             <Link to={url}><button  style = { { border : 'none', backgroundColor : 'white', color : 'cornflowerblue'}}>수정</button></Link>
+             <button className='delete' onClick={comfirms}  style = { { border : 'none', backgroundColor : 'white', color : 'cornflowerblue'}}>삭제</button>
              </p> : null }
-           <p>제목 : {title()}</p>
-           <p>내용 : {contents()}</p>
-           <hr style={ {width : '1120px'}}/>
+             <br/>
+           <div>
+           <h3>{title()}</h3>
+           <br/>
+           <br/>
+           <hr/>
+           <br/>
+           <pre><p>{contents()}</p></pre>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <div className='footercontainer'>
            <Comment contentId = {query.id} userId = {admin} />
-           <footer>
-           <p className='listurl' style={ { marginLeft : '1040px'}}><Link to={listurl}><button>목록으로</button></Link></p>
-           </footer>
+           <p><Link to={listurl}><button
+           style = { { border : 'none', backgroundColor : 'white', color : 'cornflowerblue'}}
+           >목록으로</button></Link></p>
+           </div>
+           </div>
+           </div>
          </div>
         )}
      

@@ -14,6 +14,8 @@
             title : '',
             contents : '',
         });
+        let [category,setCategory] = useState([]);
+        let [selected, setSelected] = useState();
 
         const location = window.location.search;
         const query = queryString.parse(location);
@@ -29,6 +31,11 @@
                 setInputs({title : res.data.title, contents : res.data.contents});
                 console.log(res.data);
             })
+
+            axios.get('http://localhost:8088/category')
+            .then( res => {
+                setCategory(res.data);
+            })
         },[])
 
         const onChange = (e) => {
@@ -39,13 +46,18 @@
             });
         }
 
+        const handleselectChange = (e) => {
+            setSelected(e.target.value);
+        };
+
         
         const updates = () => {
             axios.post(updateurl, {
                 id : query.id,
                 title : inputs.title,
                 contents : inputs.contents,
-                userId : (JSON.parse(window.localStorage.getItem('userId'))).userId
+                userId : (JSON.parse(window.localStorage.getItem('userId'))).userId,
+                category : selected
             })
             .then(res => {
                 document.location.href = "/contents?id="+res.data.id+"&pg="+query.pg+"&sz="+query.sz;
@@ -56,11 +68,20 @@
         return(
             <Transition in = {true} timeout = {700} appear>
                 {state => (
-                      <div style={ { postion : 'absolute'}} className={`pageSlider-${state}`}>
+                      <div className={`pageSlider-${state}`}>
+                        <div className='flexcontainer'>
+                        <span>카테고리 선택 </span>
+                        <select onChange={handleselectChange} style = { { marginLeft : '25px', border : 'none', fontSize : '12px' } }>
+                        <option value = "">선택</option>
+                        {category.map( category => {
+                            return <option value = {category.category} >{category.category}</option>
+                        })}
+                        </select>
+                        </div>
                       <input type='text' name='title' value = {inputs.title} placeholder='제목' className='inputs'
                           onChange={onChange}
                           />
-                          <button onClick={updates}>수정</button>
+                          <button style = { { marginLeft : '70px', border : '1px solid black' , backgroundColor : 'white'} }onClick={updates}>수정</button>
                           <hr/>
                           <br/>
                           <br/>
@@ -68,7 +89,9 @@
                           onChange={onChange}
                           />
                       <footer>
-                      <p className='listurl'><Link to={listurl}><button>목록으로</button></Link></p>
+                      <div className='modifyfooter'>
+                      <p><Link to={listurl}><button style={ { color : 'white' , border : 'none' , backgroundColor : 'cornflowerblue'}}>목록으로</button></Link></p>
+                      </div>
                       </footer>
                   </div>
 
