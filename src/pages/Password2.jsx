@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Transition } from 'react-transition-group';
+import './Login.css';
 
 
 
@@ -142,9 +143,10 @@ const Password2 = () => {
           <Transition in = {true} timeout ={1000} appear>
             {state => (
                <div className={`pageSlider-${state}`}>
-               <table style={ {marginLeft : '280px', width : '450px' , height : '250px', position : 'absolute'}}>
-               <div style={ {padding : '30px', paddingRight:'50px'}}>
-               <h2 style={{marginLeft : '120px', color : 'cornflowerblue'}}>Find Password</h2>
+               <div className='container'>
+               <table>
+               <div>
+               <h2 style={{textAlign : 'center' , color : 'cornflowerblue'}}>Find Password</h2>
                <br/>
                <input type = 'password' autocomplete="off"  value = {member.password} name = 'password' onChange = {onChange} style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="비밀번호를 입력하세요" required />
                <br/>
@@ -155,6 +157,7 @@ const Password2 = () => {
                <button onClick = {Join2} style={ { borderRadius : '5px' , marginLeft : '15px', width : '400px', backgroundColor : 'cornflowerblue', color : 'white'}}>비밀번호 재설정</button>
                </div>
                </table>
+               </div>
                </div>
             )}
             </Transition>

@@ -77,11 +77,11 @@ function Login() {
               );
               const now = new Date();
               const values = {
-                value : LoginRef.current.value,
+                userId : LoginRef.current.value,
                 sessionId : responses.data,
                 expire : now.getTime() + 1000 * 60 * 30
               }
-              window.localStorage.setItem('usersId',JSON.stringify(values));
+              window.localStorage.setItem('userId',JSON.stringify(values));
               alert('로그인에 성공하였습니다.');
               document.location.href='/';
             }
@@ -94,11 +94,11 @@ function Login() {
           else {
             const now = new Date();
             const values = {
-              value : LoginRef.current.value,
+              userId : LoginRef.current.value,
               sessionId : response.data,
               expire : now.getTime() + 1000 * 60 * 30
             }
-            window.localStorage.setItem('usersId',JSON.stringify(values));
+            window.localStorage.setItem('userId',JSON.stringify(values));
             alert('로그인에 성공하였습니다.');
             document.location.href='/';
           }
@@ -118,21 +118,23 @@ function Login() {
   return (
     <Transition in = {true} timeout = {700} appear>
       {state => (
-         <div className={`pageSlider-${state}`}>
-         <table style={ {marginLeft : '280px', width : '450px' , height : '250px', position : 'absolute'}}>
-         <div style={ {padding : '30px', paddingRight:'50px'}}>
-         <h2 style={{marginLeft : '175px', color : 'cornflowerblue'}}>Login</h2>
-         <br/>
-         <input type = 'text' style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder="아이디" ref = {LoginRef} />
-         <br/>
-         <input type = 'password' style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="비밀번호" ref = {PasswordRef} />
-         <br/>
-         <br/>
-         <button onClick={Login} style={{ marginLeft : '15px', width : '400px' , borderRadius : '5px', backgroundColor : 'cornflowerblue'}}><span style={ { color : 'white'}}>로그인</span></button>
-         <br/>
-         </div>
-         </table>
-         </div>
+        <div className={`pageSlider-${state}`}>
+        <div className='container'>
+        <table>
+        <div>
+        <h2 className='title'>Login</h2>
+        <br/>
+        <input type = 'text'  className = 'input' placeholder="아이디" ref = {LoginRef} />
+        <br/>
+        <input type = 'password' className = 'input' placeholder ="비밀번호" ref = {PasswordRef} />
+        <br/>
+        <br/>
+        <button onClick={Login} className ='button'><span>로그인</span></button>
+        <br/>
+        </div>
+        </table>
+        </div>
+        </div>
 
       )}
     </Transition>

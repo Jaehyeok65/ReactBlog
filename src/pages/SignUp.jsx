@@ -142,9 +142,10 @@ function SignUp() {
     <Transition in = {true} timeout = {700} appear>
       {state => (
         <div className={`pageSlider-${state}`}>
-        <table style={ {marginLeft : '280px', width : '450px' , height : '250px', position : 'absolute'}}>
-        <div style={ {padding : '30px', paddingRight:'50px'}}>
-        <h2 style={{marginLeft : '155px', color : 'cornflowerblue'}}>Sign Up</h2>
+        <div className='container'>
+        <table>
+        <div>
+        <h2 style={{textAlign : 'center', color : 'cornflowerblue'}}>Sign Up</h2>
         <br/>
         <input type = 'text' autocomplete="off"  value = {member.name} name = 'name' onChange = {onChange} style={{marginLeft : '15px', width : '400px', height : '40px'}} placeholder ="이름" required />
         <br/>
@@ -164,6 +165,7 @@ function SignUp() {
         <button onClick={Join} style={{ marginLeft : '15px', width : '400px' ,borderRadius : '5px', backgroundColor : 'cornflowerblue'}}><span style={ { color : 'white'}}>회원가입</span></button>
         </div>
         </table>
+        </div>
         </div>
 
       )}

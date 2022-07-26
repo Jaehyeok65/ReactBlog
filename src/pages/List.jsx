@@ -167,7 +167,7 @@
         <button type="button" className="btn" onClick={onSearch}><BsSearch style={ { marginBottom :'5px'}}/></button>
         </div>
         <hr />
-            <div className='container'>
+            <div className='containers'>
             <Category getData = {getData} className='item' />
             <div className='item'>
             {post.map(post => {
